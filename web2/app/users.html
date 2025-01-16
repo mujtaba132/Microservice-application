@@ -1,0 +1,101 @@
+<!-- users.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users List</title>
+  <style>
+    /* Basic styling for the page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('https://img.freepik.com/premium-photo/digital-ecommerce-sales-increase-save-time-money-with-multiple-products-one-cart-shop-with-confidence-ecommerce-concept-ai-generative_971718-224.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 2.5rem;
+      color: #ff7f50;
+    }
+
+    /* Styling the user list */
+    .user-container {
+      width: 80%;
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .user-card {
+      background-color: #333;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      padding: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .user-card h3 {
+      color: #ff7f50;
+      margin: 0;
+    }
+
+    .user-card p {
+      margin: 5px 0;
+      color: #ddd;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 2rem;
+      }
+
+      .user-container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>User List</h2>
+  <div class="user-container" id="userContainer">
+    <!-- User cards will be dynamically populated here -->
+  </div>
+
+  <script>
+    // Fetch users and populate them in the HTML
+    async function fetchUsers() {
+      try {
+        const response = await fetch('/fetch-users'); // API endpoint
+        const users = await response.json();
+
+        const container = document.getElementById('userContainer');
+        container.innerHTML = ''; // Clear any existing content
+
+        users.forEach(user => {
+          const userCard = `
+            <div class="user-card">
+              <h3>Username: ${user.username}</h3>
+              <p>Password: ${user.password}</p>
+            </div>
+          `;
+          container.innerHTML += userCard;
+        });
+      } catch (err) {
+        console.error('Error fetching users:', err);
+      }
+    }
+
+    // Call fetchUsers when the page loads
+    window.onload = fetchUsers;
+  </script>
+</body>
+</html>

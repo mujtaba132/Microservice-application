@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Categories</title>
+  <style>
+    /* Basic styling for the page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('https://img.freepik.com/premium-photo/digital-ecommerce-sales-increase-save-time-money-with-multiple-products-one-cart-shop-with-confidence-ecommerce-concept-ai-generative_971718-224.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 2.5rem;
+      color: #ff7f50;
+    }
+
+    /* Styling the category container */
+    .category-container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .category {
+      margin-bottom: 30px;
+      padding: 15px;
+      background-color: #444;
+      border-radius: 10px;
+    }
+
+    .category h3 {
+      color: #ff7f50;
+      text-align: center;
+    }
+
+    /* Horizontal scrolling for products */
+    .product-list {
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      padding: 10px 0;
+    }
+
+    .product-card {
+      background-color: #333;
+      border-radius: 8px;
+      flex: 0 0 auto;
+      width: 200px;
+      padding: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .product-card h4 {
+      color: #ff7f50;
+      margin-bottom: 5px;
+    }
+
+    .product-card p {
+      margin: 5px 0;
+      color: #ddd;
+    }
+
+    /* Scrollbar styling */
+    .product-list::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .product-list::-webkit-scrollbar-thumb {
+      background-color: #ff7f50;
+      border-radius: 10px;
+    }
+
+    .product-list::-webkit-scrollbar-track {
+      background-color: #555;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 2rem;
+      }
+
+      .category-container {
+        padding: 15px;
+      }
+
+      .product-card {
+        width: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Product Categories</h2>
+  <div class="category-container" id="categoryContainer">
+    <!-- Categories and products will be dynamically populated here -->
+  </div>
+
+  <script>
+    // Fetch categories and products and populate them in the HTML
+    async function fetchCategoriesAndProducts() {
+      try {
+       const categories = [
+  {
+    name: 'Electronics',
+    products: [
+      { name: 'Laptop', image: 'https://i.imgur.com/Xb4DDkY.png', price: '$999' },
+      { name: 'Smartphone', image: 'https://i.imgur.com/fOSXLO6.png', price: '$699' },
+      { name: 'Headphones', image: 'https://i.imgur.com/kLgufwI.png', price: '$199' },
+      { name: 'Smartwatch', image: 'https://i.imgur.com/AKzWdMd.png', price: '$299' },
+      { name: 'Tablet', image: 'https://i.imgur.com/Tv7Dfx4.png', price: '$399' },
+      { name: 'Camera', image: 'https://i.imgur.com/yEt6L0W.png', price: '$499' },
+      { name: 'Speaker', image: 'https://i.imgur.com/L1pfb8n.png', price: '$149' }
+    ]
+  },
+  {
+    name: 'Fashion',
+    products: [
+      { name: 'T-shirt', image: 'https://i.imgur.com/QjK5GZU.png', price: '$29' },
+      { name: 'Jeans', image: 'https://i.imgur.com/3Bl9Zs6.png', price: '$49' },
+      { name: 'Jacket', image: 'https://i.imgur.com/SNRixM4.png', price: '$79' },
+      { name: 'Shoes', image: 'https://i.imgur.com/fn3STvF.png', price: '$59' },
+      { name: 'Hat', image: 'https://i.imgur.com/8jrQxSh.png', price: '$19' },
+      { name: 'Sunglasses', image: 'https://i.imgur.com/lIPQDrb.png', price: '$99' },
+      { name: 'Belt', image: 'https://i.imgur.com/kYRY1CR.png', price: '$39' }
+    ]
+  },
+  {
+    name: 'Home Appliances',
+    products: [
+      { name: 'Vacuum Cleaner', image: 'https://i.imgur.com/8N6dxCe.png', price: '$199' },
+      { name: 'Microwave', image: 'https://i.imgur.com/GHEibBx.png', price: '$249' },
+      { name: 'Refrigerator', image: 'https://i.imgur.com/ZF6HC45.png', price: '$799' },
+      { name: 'Washing Machine', image: 'https://i.imgur.com/h4RWwTx.png', price: '$499' },
+      { name: 'Blender', image: 'https://i.imgur.com/UQkxzZp.png', price: '$89' },
+      { name: 'Coffee Maker', image: 'https://i.imgur.com/9IzsIb1.png', price: '$129' },
+      { name: 'Toaster', image: 'https://i.imgur.com/hOziwO1.png', price: '$49' }
+    ]
+  }
+];
+
+        const container = document.getElementById('categoryContainer');
+        container.innerHTML = ''; // Clear any existing content
+
+        categories.forEach(category => {
+          const categoryDiv = `
+            <div class="category">
+              <h3>${category.name}</h3>
+              <div class="product-list">
+                ${category.products.map(product => `
+                  <div class="product-card">
+                    <img src="${product.image}" alt="${product.name}" />
+                    <h4>${product.name}</h4>
+                    <p>Price: ${product.price}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+          container.innerHTML += categoryDiv;
+        });
+      } catch (err) {
+        console.error('Error fetching categories:', err);
+      }
+    }
+
+    // Call fetchCategoriesAndProducts when the page loads
+    window.onload = fetchCategoriesAndProducts;
+  </script>
+</body>
+</html>
